@@ -1,0 +1,1 @@
+Implementation of [Base 128 Varints](https://protobuf.dev/programming-guides/encoding/#varints) encoding & decoding in JS & Python. May add more languages implementation in future
