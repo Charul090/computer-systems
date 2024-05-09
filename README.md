@@ -10,3 +10,5 @@ To understand how computers run program, how data is stored in memory, represent
 
 - [Protocol Buffer 128bit VarInt](/protobuf-varint)
 - [CSS Hex To RGBA](/css-color-convert)
+- [Beep Boop](/beep-boop)
+- [UTF 8 Truncate](/utf-8-truncate)
