@@ -38,6 +38,7 @@ cases = (
 for file_name, expectation in cases:
     with open('../files/' + file_name, 'rb') as f:
         data = struct.unpack('>Q', f.read())[0]
+        print(data, f.read())
         assert encode(data) == expectation
         assert decode(encode(data)) == data
 
