@@ -5,28 +5,23 @@ def conceal(string):
     if len(string) == 0 or len(string) > 6:
         raise Exception('String too long')
 
-    prefix_bytes = 0b1111111111111
-    str_byte = string.encode()
-    for x in range(len(str_byte)):
-        prefix_bytes <<= 8
-        prefix_bytes |= str_byte[x]
-
-    prefix_bytes <<= 51 - (len(str_byte) * 8)
-
-    ans = struct.unpack('>d', prefix_bytes.to_bytes(8, byteorder='big'))[0]
+    first_byte = b'\xff'
+    second_byte = (0xf8 | len(string)).to_bytes(1, 'big')
+    string_bytes = string.encode()
+    padding_bytes = bytes(6 - len(string)) if len(string) < 6 else b''
+    ans = struct.unpack('>d', first_byte + second_byte + string_bytes + padding_bytes)[0]
 
     return ans
 
 
 def extract(curr_nan):
     bits = struct.pack('>d', curr_nan)
-    bits_number = int.from_bytes(bits, 'big') >> 3
-    ans_string = ''
-    for _ in range(6):
-        curr_ascii_val = 0b11111111 & bits_number
-        bits_number >>= 8
-        if curr_ascii_val != 0:
-            ans_string = chr(curr_ascii_val) + ans_string
+    string_length = bits[1] & 0b111
 
-    return ans_string
+    return bits[2: 2 + string_length].decode()
 
+
+print(extract(conceal('hello!')))
+print(extract(conceal('he')))
+print(extract(conceal('hello')))
+print(extract(conceal('h')))
