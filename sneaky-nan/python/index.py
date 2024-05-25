@@ -5,14 +5,13 @@ def conceal(string):
     if len(string) == 0 or len(string) > 6:
         raise Exception('String too long')
 
-    prefix_bytes = 0b0111111111110
+    prefix_bytes = 0b1111111111111
     str_byte = string.encode()
     for x in range(len(str_byte)):
         prefix_bytes <<= 8
         prefix_bytes |= str_byte[x]
 
-    for y in range(51 - (len(str_byte) * 8)):
-        prefix_bytes <<= 1
+    prefix_bytes <<= 51 - (len(str_byte) * 8)
 
     ans = struct.unpack('>d', prefix_bytes.to_bytes(8, byteorder='big'))[0]
 
