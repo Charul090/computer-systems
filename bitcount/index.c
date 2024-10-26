@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <assert.h>
+#include <stdint.h>
 
-int bitCount(long long number);
+int bitCount(uint32_t number);
 
 int main(void) {
     assert(bitCount(0) == 0);
@@ -11,7 +12,7 @@ int main(void) {
     assert(bitCount(0xffffffff) == 32);
 }
 
-int bitCount(long long number) {
+int bitCount(uint32_t number) {
     int count = 0;
 
     while (number > 0) {
