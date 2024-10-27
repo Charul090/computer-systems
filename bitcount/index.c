@@ -16,11 +16,8 @@ int bitCount(uint32_t number) {
     int count = 0;
 
     while (number > 0) {
-        int flag = number & 1;
-        number = number >> 1;
-        if (flag == 1) {
-            count++;
-        }
+        count++;
+        number &= (number - 1);
     }
     return count;
 }
