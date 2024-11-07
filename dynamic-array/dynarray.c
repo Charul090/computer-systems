@@ -41,12 +41,12 @@ void *DA_pop(DA *da) {
 }
 
 void DA_set(DA *da, void *x, int i) {
-  if (da -> size <= i) return;
+  if (da -> size <= i || i < 0) return;
   da -> ptr[i] = x;
 }
 
 void *DA_get(DA *da, int i) {
-  if ((da -> size) <= i) return NULL;
+  if ((da -> size) <= i || i < 0) return NULL;
 
   return da -> ptr[i];
 }
