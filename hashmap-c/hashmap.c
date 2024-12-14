@@ -80,20 +80,17 @@ void* Hashmap_set(Hashmap *h, char* string, void* addr) {
 }
 
 void Hashmap_delete(Hashmap *h, char* key) {
-  Item* prev = 0;
   int index = getHashedValue(key, h->length);
-  Item* item = h->items[index];
+  Item** item = &(h->items[index]);
   while(item) {
-    if (strcmp(key, item->key) == 0) {
-      if (prev) {
-        prev->next = item->next;
-      } else {
-        h->items[index] = item->next;
-      }
+    if (strcmp(key, (*item)->key) == 0) {
+      Item* curr = *item;
+      *item = (*item)->next;
+      free(curr->key);
+      free(curr);
       break;
     }
-    prev = item;
-    item = item->next;
+    item = &(*item)->next;
   }
 }
 
@@ -112,7 +109,7 @@ void Hashmap_free(Hashmap *h) {
 }
 
 Hashmap* Hashmap_new () {
-  Item** item = malloc(sizeof(void*) * MAX_KEY_SIZE);
+  Item** item = calloc(MAX_KEY_SIZE, sizeof(void*));
   Hashmap* h = malloc(sizeof(Hashmap)); 
   h->length = STARTING_BUCKETS;
   h->items = item;
