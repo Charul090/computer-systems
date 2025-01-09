@@ -4,7 +4,6 @@
 extern int pangram(char *);
 
 int main(void) {
-      //  printf("%d == %d\n",pangram("abcdefghijklmnopqrstuvwxyz"), 0x07fffffe);
   assert(pangram("") == 0);
   assert(pangram("abcdefghijklmnopqrstuvwxyz") == 1);
   assert(pangram("the quick brown fox jumps over teh lazy dog") == 1);
